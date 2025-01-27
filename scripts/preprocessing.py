@@ -10,34 +10,36 @@ import math
 
 import os
 
-##### Extended difference of Gaussians
+##### Rescale an array's range
 
 def scale_range(X, new_min, new_max):
     """Scale all values in X to the range [new_min,new_max]"""
     Xmin, Xmax = X.min(), X.max()
     return ((X - Xmin) / (Xmax - Xmin)) * (new_max - new_min) + new_min
 
-def xdog(X, k, sigma, tau, ep, phi, scale_min, scale_max, threshold=None):
+##### Extended difference of Gaussians
+
+def xdog(X, k, sigma, tau, ep, phi, scale_min, scale_max, truncate, threshold=None):
     """Perform an extended difference of gaussians for edge detection"""
     
     def threshold_binary(X, ep):
         """Set all values in X equal to or above the threshold to 1, set all other values to 0"""
         X[X < ep] = 0
-        X[X != 0] = 1
+        X[X != 0] = scale_max
         return X
     
     def threshold_tanh(X, ep, phi):
         """Set all values in X equal to or above the threshold to 1, use tanh to determine the other values"""
         X_shape = X.shape
         X = X.flatten()
-        X[X < ep] = 1 + np.tanh(phi * (X[X < ep] - ep))
-        X[X >= ep] = 1
+        X[X <= ep] = (1 + np.tanh(phi * (X[X < ep] - ep))) * (scale_max - scale_min) + scale_min
+        X[X > ep] = scale_max
         return X.reshape(X_shape)
 
     ###
     
-    db1 = gaussian_filter(X, sigma=sigma)
-    db2 = gaussian_filter(X, sigma=sigma * k)
+    db1 = gaussian_filter(X, sigma=sigma, truncate=truncate)
+    db2 = gaussian_filter(X, sigma=sigma * k, truncate=truncate)
     dog = ((1 + tau) * db1) - (tau * db2)
     dog = scale_range(dog, scale_min, scale_max)
 
@@ -48,22 +50,6 @@ def xdog(X, k, sigma, tau, ep, phi, scale_min, scale_max, threshold=None):
         return threshold_tanh(dog, ep, phi)
     else:
         return dog
-
-##### Image compression: Discrete Cosine Transform
-
-def dct2(X, type=None, norm=None):
-    if type is None: type = 2
-    if norm is None: norm = "ortho"
-    return dct(dct(X.T, type=type, norm=norm).T, type=type, norm=norm)
-
-def idct2(X, type=None, norm=None):
-    if type is None: type = 2
-    if norm is None: norm = "ortho"
-    return idct(idct(X.T, type=type, norm=norm).T, type=type, norm=norm)
-
-def compress_image(X, new_size, type=None, norm=None):
-    height, width = new_size
-    return idct2(dct2(X, type, norm)[:height, :width], type, norm)
 
 ##### Adaptive Mask: Filtering out the diaphragm
 
@@ -113,9 +99,9 @@ def filter_out_diaphragm(X, threshold=0.9, sigma=1):
     ### Remove the identified largest region
     X2 = X.copy()
     X2[mask > 0] = X.min()
-    return X2
+    return mask
 
-##### Adaptive cropping
+##### Adaptive cropping of border regions
 
 def crop_borders(img_arr, threshold_range, crop_q1_threshold, crop_q3_threshold):
     """
@@ -165,19 +151,47 @@ def crop_borders(img_arr, threshold_range, crop_q1_threshold, crop_q3_threshold)
 
 ##### Find best 90-degree rotation
 
-def get_best_rotation(img_arr, avg_img_arr):
-    """Find the best 90 degree rotation of img where the mean of pixel-wise Euclidean distances between
-    the img and avg_img is minimized"""
+def get_best_rotation(img_arr, img_arr1, img_arr2):
+    """Find the best 90 degree rotation of img where the harmonic mean of pixel-wise Euclidean distances between
+    the img and two input images is minimized"""
     img_arrs = [img_arr] + [np.rot90(img_arr, k=k) for k in [1,2,3]]
     for j,img_arr_i in enumerate(img_arrs):
+        d1 = np.mean((img_arr_i - img_arr1)**2)
+        d2 = np.mean((img_arr - img_arr2)**2)
+        hm_d = (2 / ((1/d1) + (1/d2)))
         if j == 0:
-            best_img_i = img_arr_i
-            best_d = np.mean((img_arr_i - avg_img_arr)**2)
+            best_img_i = img_arr_i.copy()
+            best_hm_d = hm_d.copy()
         else:
-            d = np.mean((img_arr_i - avg_img_arr)**2)
-            if d < best_d:
-                best_img_i = img_arr_i
-                best_d = np.mean((img_arr_i - avg_img_arr)**2)
+            if hm_d < best_hm_d:
+                best_img_i = img_arr_i.copy()
+                best_hm_d = hm_d.copy()
 
-    return best_img_i, best_d
+    return best_img_i, best_hm_d
+
+##### Histogram equalization for contrast adjustment
+
+def get_hist(X, bins):
+    hist = np.zeros(bins)
+    for pixel_value in X: 
+        hist[pixel_value] += 1
+    return hist
+
+def normalize_cumsum(cumsum, bins):
+    cumsum_min = cumsum.min()
+    numer = (cumsum - cumsum_min) * (bins - 1)
+    denom = cumsum.max() - cumsum_min
+
+    return (numer / denom).astype("uint8")
+
+def histogram_equalization(X, scale_min, scale_max, sigma=2):
+    """Increase image contrast by equalizing the histogram"""
+    n_bins = scale_max - scale_min + 1
+    X_flat = scale_range(X, scale_min, scale_max).astype(np.uint8).flatten()
+    X_hist = get_hist(X_flat, n_bins)
+    X_hist2 = np.cumsum(X_hist)
+    X_hist2 = normalize_cumsum(X_hist2, n_bins)
+    X_hist2 = gaussian_filter(X_hist2, sigma)
+    return X_hist2[X_flat].reshape(X.shape)
+    
 
