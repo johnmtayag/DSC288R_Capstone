@@ -110,41 +110,39 @@ def crop_borders(img_arr, threshold_range, crop_q1_threshold, crop_q3_threshold)
     crop_q1_threshold: The maximum of the row/column must exceed this threshold
     crop_q3_threshold: The minimum of the row/column must exceed this threshold
     """
+    def check_conditions(min_val, max_val):
+        if max_val < crop_q1_threshold: return False
+        if min_val > crop_q3_threshold: return False
+        if max_val - min_val < threshold_range: return False
+        return True
+    #####
     n_rows, n_cols = img_arr.shape
     # top
     for top_ind in np.arange(0, n_rows - 1, 1):
         row = img_arr[top_ind, :]
         row_min, row_max = row.min(), row.max()
-        row_low_count = np.sum(row < threshold_range)
-        row_high_count = np.sum(row > threshold_range)
-        if (row_max - row_min > threshold_range) and (row_max > crop_q1_threshold) and (row_min < crop_q3_threshold):
+        if check_conditions(row_min, row_max):
             break
     
     # bottom
     for bottom_ind in np.arange(n_rows - 1, 0, -1):
         row = img_arr[bottom_ind, :]
         row_min, row_max = row.min(), row.max()
-        row_low_count = np.sum(row < threshold_range)
-        row_high_count = np.sum(row > threshold_range)
-        if (row_max - row_min > threshold_range) and (row_max > crop_q1_threshold) and (row_min < crop_q3_threshold):
+        if check_conditions(row_min, row_max):
             break
     
     # left
     for left_ind in np.arange(0, n_cols - 1, 1):
         col = img_arr[:, left_ind]
         col_min, col_max = col.min(), col.max()
-        col_low_count = np.sum(col < threshold_range)
-        col_high_count = np.sum(col > threshold_range)
-        if (col_max - col_min > threshold_range) and (col_max > crop_q1_threshold) and (col_min < crop_q3_threshold):
+        if check_conditions(col_min, col_max):
             break
     
     # right
     for right_ind in np.arange(n_cols - 1, 0, -1):
         col = img_arr[:, right_ind]
         col_min, col_max = col.min(), col.max()
-        row_low_count = np.sum(row < threshold_range)
-        row_high_count = np.sum(row > threshold_range)
-        if (col_max - col_min > threshold_range) and (col_max > crop_q1_threshold) and (col_min < crop_q3_threshold):
+        if check_conditions(col_min, col_max):
             break
     
     return img_arr[top_ind:bottom_ind, left_ind:right_ind]
@@ -193,5 +191,23 @@ def histogram_equalization(X, scale_min, scale_max, sigma=2):
     X_hist2 = normalize_cumsum(X_hist2, n_bins)
     X_hist2 = gaussian_filter(X_hist2, sigma)
     return X_hist2[X_flat].reshape(X.shape)
-    
 
+##### Peak Signal-to-Noise Ratio
+
+def get_psnr(img_arr, img_arr2, scale_min, scale_max):
+    """ Calculates the peak signal-to-noise ratio in dB between an edited image (img_arr2) and the original (img_arr)"""
+    img_arr = scale_range(img_arr, scale_min, scale_max)
+    img_arr2 = scale_range(img_arr2, scale_min, scale_max)
+    mse = np.mean((img_arr.astype(np.float64) - img_arr2.astype(np.float64))**2)
+    if mse==0: 
+        return np.inf
+    else:
+        return 20 * math.log10(scale_max) - 10 * math.log10(mse)
+
+##### Unsharp Masking for Edge Enhancements
+    
+def unsharp_masking(img_arr, sigma, weight, scale_min, scale_max):
+    """Enhance the image by increasing edge contrasts"""
+    img_arr = scale_range(img_arr, scale_min, scale_max)
+    blurred = gaussian_filter(img_arr, sigma)
+    return img_arr + (img_arr - blurred) * weight
