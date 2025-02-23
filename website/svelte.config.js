@@ -10,7 +10,7 @@ export default {
       fallback: '404.html',
     }),
     paths: {
-      base: dev ? '' : '/test',
+      base: dev ? '' : '/DSC288R_Capstone',
     }
   },
 };

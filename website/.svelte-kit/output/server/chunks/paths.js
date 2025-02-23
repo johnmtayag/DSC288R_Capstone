@@ -1,4 +1,4 @@
-let base = "/test";
+let base = "/DSC288R_Capstone";
 let assets = base;
 const app_dir = "_app";
 const initial = { base, assets };

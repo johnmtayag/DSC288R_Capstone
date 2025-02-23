@@ -6,11 +6,11 @@ function __memo(fn) {
 
 return {
 	appDir: "_app",
-	appPath: "test/_app",
+	appPath: "DSC288R_Capstone/_app",
 	assets: new Set(["favicon.png","summary.json"]),
 	mimeTypes: {".png":"image/png",".json":"application/json"},
 	_: {
-		client: {start:"_app/immutable/entry/start.BQxusTei.js",app:"_app/immutable/entry/app.XjBwT8RP.js",imports:["_app/immutable/entry/start.BQxusTei.js","_app/immutable/chunks/ChqephoO.js","_app/immutable/chunks/D54Qv5wd.js","_app/immutable/chunks/CVBHw7-0.js","_app/immutable/chunks/DIeogL5L.js","_app/immutable/chunks/Wq8dAFDs.js","_app/immutable/entry/app.XjBwT8RP.js","_app/immutable/chunks/CVBHw7-0.js","_app/immutable/chunks/DIeogL5L.js","_app/immutable/chunks/U3zYTEU4.js","_app/immutable/chunks/E9_D7D5W.js","_app/immutable/chunks/Cb4LbJ0B.js","_app/immutable/chunks/Bg9kRutz.js","_app/immutable/chunks/C_PElDtV.js","_app/immutable/chunks/DKQN4h9M.js","_app/immutable/chunks/D54Qv5wd.js"],stylesheets:[],fonts:[],uses_env_dynamic_public:false},
+		client: {start:"_app/immutable/entry/start.B7VeIH6u.js",app:"_app/immutable/entry/app.B6QtLPwf.js",imports:["_app/immutable/entry/start.B7VeIH6u.js","_app/immutable/chunks/TjrZn5ak.js","_app/immutable/chunks/D54Qv5wd.js","_app/immutable/chunks/CVBHw7-0.js","_app/immutable/chunks/DIeogL5L.js","_app/immutable/chunks/0v0qjA1N.js","_app/immutable/entry/app.B6QtLPwf.js","_app/immutable/chunks/CVBHw7-0.js","_app/immutable/chunks/DIeogL5L.js","_app/immutable/chunks/U3zYTEU4.js","_app/immutable/chunks/E9_D7D5W.js","_app/immutable/chunks/Cb4LbJ0B.js","_app/immutable/chunks/Bg9kRutz.js","_app/immutable/chunks/C_PElDtV.js","_app/immutable/chunks/DKQN4h9M.js","_app/immutable/chunks/D54Qv5wd.js"],stylesheets:[],fonts:[],uses_env_dynamic_public:false},
 		nodes: [
 			__memo(() => import('./nodes/0.js')),
 			__memo(() => import('./nodes/1.js')),
