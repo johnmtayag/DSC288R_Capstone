@@ -3,6 +3,7 @@
     import { onMount } from "svelte";
     import PieChart from "$lib/components/PieChart.svelte";
     import StackedBarChart from "$lib/components/StackedBarChart.svelte";
+    import { base } from '$app/paths';
 
     let data = null;
     let selectedDataset = "filtered"; // default to filtered dataset
@@ -10,7 +11,7 @@
 
     onMount(async () => {
         try {
-            const response = await fetch("/summary.json");
+            const response = await fetch(`${base}/summary.json`);
             data = await response.json();
         } catch (err) {
             console.error("Error loading summary.json:", err);
