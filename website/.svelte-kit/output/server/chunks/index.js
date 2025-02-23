@@ -91,7 +91,7 @@ function render(component, options = {}) {
   };
 }
 function stringify(value) {
-  return true ? value : value == null ? "" : value + "";
+  return typeof value === "string" ? value : value == null ? "" : value + "";
 }
 function slot(payload, $$props, name, slot_props, fallback_fn) {
   var slot_fn = $$props.$$slots?.[name];

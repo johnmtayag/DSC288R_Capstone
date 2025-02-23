@@ -2,6 +2,7 @@
   import { afterNavigate } from '$app/navigation';
   import BackToTop from '$lib/components/BackToTop.svelte';
   import { onMount } from 'svelte';
+  import { base } from '$app/paths';
 
   const EXTRA_SPACE = 20;
   let topBar;
@@ -144,13 +145,13 @@
     <!-- <img src="/path/to/logo.png" alt="Logo" class="nav-logo" /> -->
   </div>
 
-  <a href="/" sveltekit:prefetch>Home</a>
-  <a href="/problem" sveltekit:prefetch>Problem</a>
-  <a href="/dataset" sveltekit:prefetch>Dataset</a>
-  <a href="/methodology" sveltekit:prefetch>Methodology</a>
-  <a href="/results" sveltekit:prefetch>Results</a>
-  <!-- <a href="/contributions" sveltekit:prefetch>Contributions</a> -->
-  <a href="/references" sveltekit:prefetch>References</a>
+  <a href="{base}/" sveltekit:prefetch>Home</a>
+  <a href="{base}/problem" sveltekit:prefetch>Problem</a>
+  <a href="{base}/dataset" sveltekit:prefetch>Dataset</a>
+  <a href="{base}/methodology" sveltekit:prefetch>Methodology</a>
+  <a href="{base}/results" sveltekit:prefetch>Results</a>
+  <!-- <a href="{base}/contributions" sveltekit:prefetch>Contributions</a> -->
+  <a href="{base}/references" sveltekit:prefetch>References</a>
 </nav>
 
 <div class="content-wrapper">
