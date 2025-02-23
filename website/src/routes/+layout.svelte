@@ -7,6 +7,15 @@
   const EXTRA_SPACE = 20;
   let topBar;
 
+  // define GitHub Pages repo name
+  const repoName = "/test";
+
+  // check if running locally (localhost or file system)
+  const isLocal = window.location.origin.includes("localhost") || window.location.origin.includes("127.0.0.1");
+
+  // use "" locally, but use repoName on GitHub Pages
+  const basePath = isLocal ? "" : repoName;
+
   // highlight main navigation link (e.g., Home, Problem, etc.)
   const highlightMainNav = () => {
     const currentPath = window.location.pathname;
@@ -145,13 +154,13 @@
     <!-- <img src="/path/to/logo.png" alt="Logo" class="nav-logo" /> -->
   </div>
 
-  <a href="{base}/" sveltekit:prefetch>Home</a>
-  <a href="{base}/problem" sveltekit:prefetch>Problem</a>
-  <a href="{base}/dataset" sveltekit:prefetch>Dataset</a>
-  <a href="{base}/methodology" sveltekit:prefetch>Methodology</a>
-  <a href="{base}/results" sveltekit:prefetch>Results</a>
-  <!-- <a href="{base}/contributions" sveltekit:prefetch>Contributions</a> -->
-  <a href="{base}/references" sveltekit:prefetch>References</a>
+  <a href="{basePath}/" sveltekit:prefetch>Home</a>
+  <a href="{basePath}/problem" sveltekit:prefetch>Problem</a>
+  <a href="{basePath}/dataset" sveltekit:prefetch>Dataset</a>
+  <a href="{basePath}/methodology" sveltekit:prefetch>Methodology</a>
+  <a href="{basePath}/results" sveltekit:prefetch>Results</a>
+  <!-- <a href="{basePath}/contributions" sveltekit:prefetch>Contributions</a> -->
+  <a href="{basePath}/references" sveltekit:prefetch>References</a>
 </nav>
 
 <div class="content-wrapper">
