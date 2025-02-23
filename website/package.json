@@ -6,7 +6,6 @@
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
-		"postbuild": "mkdir -p docs && echo > docs/.nojekyll",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''"
 	},

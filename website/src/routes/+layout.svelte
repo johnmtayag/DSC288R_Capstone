@@ -21,24 +21,31 @@
   };
 
   // highlight aside navigation link (e.g., #background, #motivation, etc.)
+  let currentSection = '';
+  let lastActiveSection = '';
+
   const highlightAsideNav = () => {
     const sections = document.querySelectorAll('section');
     const asideLinks = document.querySelectorAll('aside ul li a');
     const topBarHeight = document.querySelector('.top-bar')?.offsetHeight || 0;
 
-    let currentSection = '';
+    let foundSection = false;
 
     sections.forEach((section) => {
       const sectionTop = section.offsetTop - topBarHeight - EXTRA_SPACE;
-      const sectionHeight = section.offsetHeight;
 
-      if (
-        window.scrollY >= sectionTop - 10 &&
-        window.scrollY < sectionTop + sectionHeight
-      ) {
+      if (window.scrollY >= sectionTop) {
         currentSection = section.getAttribute('id');
+        foundSection = true;
       }
     });
+
+    // if no new section is found, keep last active section highlighted
+    if (!foundSection) {
+      currentSection = lastActiveSection;
+    } else {
+      lastActiveSection = currentSection;
+    }
 
     asideLinks.forEach((link) => {
       link.classList.remove('active');
