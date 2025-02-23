@@ -11,7 +11,7 @@
 
     onMount(async () => {
         try {
-            const response = await fetch(`{base}/summary.json`);
+            const response = await fetch(`${base}/summary.json`);
             data = await response.json();
         } catch (err) {
             console.error("Error loading summary.json:", err);
