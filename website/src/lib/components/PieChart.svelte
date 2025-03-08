@@ -1,175 +1,273 @@
 <script>
-    import { onMount, tick } from "svelte";
-    import * as d3 from "d3";
+    import * as d3 from 'd3';
 
-    export let data = {};
-    export let title = "";
+    export let data = [];
+    export let title = '';
+    export let selectedIndex = -1;
+    export let colors = d3.scaleOrdinal(d3.schemeTableau10);
+    export let transitionDuration = 500;
 
-    let container;
-    let legendContainer;
-    let tooltip;
-    let selectedIndex = null;
+    let pieData;
+    let sliceGenerator = d3.pie().value((d) => d.value).sort(null);
+    let arcGenerator = d3.arc().innerRadius(0).outerRadius(50);
 
-    async function drawPieChart() {
-        if (!data || Object.keys(data).length === 0) return;
+    let wedges = {};
+    let oldData = [];
 
-        await tick();
+    $: {
+        oldData = pieData;
+        pieData = d3.sort(data.map((d) => ({ ...d })), (d) => d.label);
 
-        d3.select(container).selectAll("*").remove();
-        d3.select(legendContainer).selectAll("*").remove();
+        let arcData = sliceGenerator(pieData);
+        let arcs = arcData.map((d) => arcGenerator(d));
 
-        const width = 300;
-        const height = 300;
-        const padding = 20;
-        const radius = Math.min(width, height) / 2 - padding;
+        pieData = pieData.map((d, i) => ({
+            ...d,
+            ...arcData[i],
+            arc: arcs[i],
+        }));
 
-        const color = d3.scaleOrdinal(d3.schemeTableau10);
-        const pie = d3.pie().value(d => d[1]);
-        const data_ready = pie(Object.entries(data));
+        transitionArcs();
+    }
 
-        const arc = d3.arc().innerRadius(0).outerRadius(radius);
-        const arcHover = d3.arc().innerRadius(0).outerRadius(radius * 1.10);
-
-        const svg = d3.select(container)
-            .append("svg")
-            .attr("width", width + padding * 2)
-            .attr("height", height + padding * 2)
-            .attr("viewBox", `-${width / 2 + padding} -${height / 2 + padding} ${width + padding * 2} ${height + padding * 2}`)
-            .attr("preserveAspectRatio", "xMidYMid meet")
-            .style("overflow", "visible")
-            .append("g")
-            .attr("transform", `translate(0, 0)`);
-
-        tooltip = d3.select("body").append("div")
-            .attr("class", "tooltip")
-            .style("opacity", 0);
-
-        const slices = svg.selectAll("path")
-            .data(data_ready)
-            .enter()
-            .append("path")
-            .attr("d", arc)
-            .attr("fill", d => color(d.data[0]))
-            .attr("stroke", "#fff")
-            .style("stroke-width", "2px")
-            .style("cursor", "pointer")
-            .on("mouseover", function (event, d) {
-                d3.select(this).transition().duration(200).attr("d", arcHover);
-                tooltip.transition().duration(200).style("opacity", 1);
-                tooltip.html(`<strong>${d.data[0]}</strong>: ${d.data[1]} (${((d.data[1] / d3.sum(Object.values(data))) * 100).toFixed(1)}%)`)
-                    .style("left", `${event.pageX + 10}px`)
-                    .style("top", `${event.pageY - 20}px`);
-            })
-            .on("mouseout", function () {
-                d3.select(this).transition().duration(200).attr("d", arc);
-                tooltip.transition().duration(200).style("opacity", 0);
-            })
-            .on("click", function (_, d) {
-                selectedIndex = selectedIndex === d.index ? null : d.index;
-                updateHighlight();
-            });
-
-        const legend = d3.select(legendContainer)
-            .append("div")
-            .attr("class", "legend");
-
-        const legendItems = legend.selectAll(".legend-item")
-            .data(Object.entries(data))
-            .enter()
-            .append("div")
-            .attr("class", "legend-item")
-            .on("click", function (_, d, i) {
-                selectedIndex = selectedIndex === i ? null : i;
-                updateHighlight();
-            });
-
-        legendItems.append("span")
-            .attr("class", "legend-color")
-            .style("background-color", d => color(d[0]));
-
-        legendItems.append("span")
-            .attr("class", "legend-text")
-            .text(d => `${d[0]}: ${d[1]}`);
-
-        function updateHighlight() {
-            slices.style("opacity", (_, i) => (selectedIndex === null || selectedIndex === i ? 1 : 0.3));
-            legendItems.style("opacity", (_, i) => (selectedIndex === null || selectedIndex === i ? 1 : 0.3));
+    function toggleWedge(index, event) {
+        if (!event.key || event.key === 'Enter') {
+            selectedIndex = selectedIndex === index ? -1 : index;
         }
     }
 
-    $: if (data && Object.keys(data).length > 0) {
-        drawPieChart();
+    function handleMouseEnter(label) {
+        pieData.forEach((slice) => {
+            const pathEl = wedges[slice.label]; // path element for that label
+            pathEl.style.opacity = (slice.label === label) ? '1' : '0.5';
+        });
     }
+
+    function handleMouseLeave() {
+        Object.values(wedges).forEach((pathEl) => {
+            pathEl.style.opacity = '1';
+        });
+    }
+
+    function transitionArcs() {
+        let wedgeElements = Object.values(wedges);
+
+        d3.selectAll(wedgeElements)
+            .transition('arc')
+            .duration(transitionDuration)
+            .styleTween('d', function (_, index) {
+                let label = Object.keys(wedges)[index];
+                let d = pieData.find((d) => d.label === label);
+                let d_old = oldData.find((d) => d.label === label);
+
+                if (!d || !d_old) {
+                    return;
+                }
+
+                let from = { ...d_old };
+                let to = { ...d };
+                let angleInterpolator = d3.interpolate(from, to);
+
+                return (t) => {
+                    return `path("${arcGenerator(angleInterpolator(t))}")`;
+                };
+            });
+    }
+
+    function transitionArc(wedge, label) {
+        label ??= Object.entries(wedges).find(([lbl, w]) => w === wedge)?.[0];
+        if (!label) return null;
+
+        let d = pieData.find((d) => d.label === label);
+        let d_old = oldData.find((d) => d.label === label);
+
+        let from = d_old ? { ...d_old } : getEmptyArc(label, oldData);
+        let to = d ? { ...d } : getEmptyArc(label, pieData);
+
+        if (sameArc(from, to)) return null;
+
+        let angleInterpolator = d3.interpolate(from, to);
+
+        return {
+            d,
+            d_old,
+            from,
+            to,
+            interpolator: (t) => `path("${arcGenerator(angleInterpolator(t))}")`,
+            type: d ? (d_old ? "update" : "in") : "out",
+        };
+    }
+
+    function sameArc(arc1, arc2) {
+        if (!arc1 && !arc2) return true;
+        if (!arc1 || !arc2) return false;
+        return arc1.startAngle === arc2.startAngle && arc1.endAngle === arc2.endAngle;
+    }
+
+    function arc(wedge) {
+        let transition = transitionArc(wedge);
+        if (!transition) return { duration: 0, css: "" };
+
+        return {
+            duration: transitionDuration,
+            easing: d3.easeCubic,
+            css: (t, u) =>
+                `d: ${transition.interpolator(
+                    transition.type === "out" ? u : t
+                )}`,
+        };
+    }
+
+    function getEmptyArc(label, data = pieData) {
+        let labels = d3.sort(new Set([...oldData, ...pieData].map((d) => d.label)));
+        let labelIndex = labels.indexOf(label);
+        let sibling;
+        for (let i = labelIndex - 1; i >= 0; i--) {
+            sibling = data.find((d) => d.label === labels[i]);
+            if (sibling) break;
+        }
+        let angle = sibling?.endAngle ?? 0;
+        return { startAngle: angle, endAngle: angle };
+    }
+
 </script>
 
-<div class="chart-container">
-    <h3 style="margin-top: 0rem;" class="chart-title">{title}</h3>
-    <div bind:this={container} class="chart-svg"></div>
-    <div bind:this={legendContainer} class="legend-container"></div>
+<div class="container">
+    {#if title}
+      <h3 class="chart-title">{title}</h3>
+    {/if}
+
+    <svg viewBox="-50 -50 100 100">
+        {#each pieData as d, i (d.label)}
+            <path 
+                bind:this={wedges[d.label]}
+                transition:arc
+                d={d.arc}
+                fill={colors(d.label)}
+                class:selected={selectedIndex === i}
+                tabindex="0"
+                role="button"
+                aria-label="Select wedge {i}"
+                on:click={(e) => toggleWedge(i, e)}
+                on:keyup={(e) => toggleWedge(i, e)}
+                on:mouseenter={() => handleMouseEnter(d.label)}
+                on:mouseleave={handleMouseLeave}
+                on:focus={() => handleMouseEnter(d.label)}
+                on:blur={handleMouseLeave}
+                style="
+                    --start-angle: { d.startAngle }rad; 
+                    --end-angle: { d.endAngle }rad;
+                "
+            />
+        {/each}
+    </svg>
+
+    <ul class="legend">
+        {#each pieData as d, i}
+        <li 
+            class:selected={selectedIndex === i}
+            style="--color: {colors(d.id ?? d.label)}"
+            on:click={(e) => toggleWedge(i, e)}
+        >
+            <span class="swatch"></span>
+            {d.label} <em>({d.value})</em>
+        </li>
+        {/each}
+    </ul>
 </div>
 
 <style>
-    .chart-container {
-        display: flex;
-        flex-direction: column;
+    .container {
         align-items: center;
         text-align: center;
-        margin-bottom: 20px;
-        max-width: 400px;
-        padding: 0px;
+        gap: 2em;
+        max-width: 100%;
+        margin: 1em auto;
+        padding: 0em;
+        min-width: 5em;
+    }
+
+    svg {
+        max-width: 20em;
+        height: auto;
+        min-width: 10em;
+        margin-block: 1em;
+        overflow: visible;
+        min-width: 15em;
+        margin-bottom: 2em;
+    }
+
+    svg:has(path:hover, path:focus-visible) {
+        path:not(:hover, :focus-visible) {
+            opacity: 50%;
+        }
+    }
+
+    path {
+        transition: transform, opacity, fill 300ms;
+        transition-property: transform, opacity, fill;
+        cursor: pointer;
+        outline: none;
+        --angle: calc(var(--end-angle) - var(--start-angle));
+        --mid-angle: calc(var(--start-angle) + var(--angle) / 2);
+        transform: rotate(var(--mid-angle)) translateY(0) scale(1) rotate(calc(-1 * var(--mid-angle)));
+
+        &.selected {
+            transform: rotate(var(--mid-angle)) translateY(-6px) scale(1.1) rotate(
+                calc(-1 * var(--mid-angle))
+            );
+        }
+    }
+
+    path:focus-visible {
+        outline: 2px solid var(--color);
+        outline-offset: 2px;
+    }
+
+    .selected {
+        --color: oklch(87.35% 0.0839 11.65) !important;
+
+        &:is(path) {
+            fill: var(--color);
+        }
     }
 
     .chart-title {
         font-size: 18px;
         font-weight: bold;
         color: #1f2937;
-        margin-bottom: 10px;
+        margin-bottom: 20px;
     }
 
-    .tooltip {
-        position: absolute;
-        background: rgba(0, 0, 0, 0.75);
-        color: #fff;
-        padding: 6px 10px;
-        border-radius: 5px;
-        font-size: 12px;
-        pointer-events: none;
-        transition: opacity 0.3s ease-in-out;
-        z-index: 10;
+    .legend {
+        flex: 1;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(9em, 1fr));
+        padding: 1em;
+        margin: 1em;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        min-width: 8em;
+        margin-left: 1em;
     }
-
-    .legend-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 5px;
-        margin-top: 0px;
-        border: 1px solid #ddd;
-        padding: 10px;
-        border-radius: 6px;
-        background: #f9f9f9;
-        max-width: 250px;
-    }
-
-    .legend-item {
+    .legend li {
         display: flex;
         align-items: center;
-        gap: 8px;
-        font-size: 14px;
-        color: #333;
-        font-weight: 500;
-        cursor: pointer;
-        transition: opacity 0.2s ease-in-out;
+        gap: 0.5em;
+        padding: 0.2em;
+        border-radius: 4px;
     }
-
-    .legend-item:hover {
-        opacity: 0.7;
-    }
-
-    .legend-color {
-        width: 14px;
-        height: 14px;
+    .swatch {
         display: inline-block;
-        border-radius: 3px;
+        width: 1em;
+        height: 1em;
+        aspect-ratio: 1 / 1;
+        background-color: var(--color);
+        border-radius: 50%;
+    }
+    .legend li em {
+        font-style: italic;
+        color: #666;
     }
 </style>

@@ -72,6 +72,7 @@
     justify-content: flex-end;
     padding: 0 1rem;
     transition: box-shadow 0.3s, background-color 0.3s;
+    transition: right 0.3s;
   }
   
   /* Add border and shadow when scrolling */
@@ -82,6 +83,12 @@
   .top-bar-actions {
     display: flex;
     gap: 1rem;
+  }
+
+  .top-bar.expanded {
+    right: 0;
+    z-index: 1000;
+    padding-right: 0.5rem;
   }
   
   .icon-button {
@@ -115,10 +122,15 @@
     margin-top: 3rem; /* Height of top bar */
     margin-left: 200px; /* Width of nav */
     margin-right: 250px; /* Width of aside */
+    transition: margin-right 0.3s;
   }
   
   main > section {
     padding: 0 2rem 0; /* top right bottom */
+  }
+
+  main.expanded {
+    margin-right: 0rem;
   }
   
   /* Right Sidebar Links */
@@ -141,13 +153,15 @@
   aside {
     background: #ffffff;
     border-left: 1px solid #e5e7eb;
-    padding: 2rem 1rem;
+    padding: 3rem 1rem;
     position: fixed;
     right: 0;
     top: 0;
     height: 100vh;
     width: 250px;
     overflow-y: auto;
+    transition: transform 0.3s ease;
+    transform: translateX(0);
   }
   
   aside ul {
@@ -177,6 +191,18 @@
 
   aside ul li a:hover {
     color: #2563eb;
+  }
+
+  aside.collapsed {
+    transform: translateX(80%);
+    border-left: none;
+  }
+
+  aside.collapsed .header-text,
+  aside.collapsed ul {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
   }
 
 /* Headings Formatting */

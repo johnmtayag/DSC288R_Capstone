@@ -14,33 +14,37 @@
     "name": "client",
     "imports": [
       "_exports.js",
-      "_equality.js"
+      "_index2.js",
+      "_index.js"
     ]
   },
-  "_equality.js": {
-    "file": "chunks/equality.js",
-    "name": "equality"
+  "_escaping.js": {
+    "file": "chunks/escaping.js",
+    "name": "escaping"
   },
   "_exports.js": {
     "file": "chunks/exports.js",
-    "name": "exports",
-    "imports": [
-      "_equality.js"
-    ]
+    "name": "exports"
   },
-  "_global.mC8z8AcH.css": {
-    "file": "_app/immutable/assets/global.mC8z8AcH.css",
-    "src": "_global.mC8z8AcH.css"
+  "_global.Cs09nIWu.css": {
+    "file": "_app/immutable/assets/global.Cs09nIWu.css",
+    "src": "_global.Cs09nIWu.css"
   },
   "_index.js": {
     "file": "chunks/index.js",
     "name": "index"
   },
+  "_index2.js": {
+    "file": "chunks/index2.js",
+    "name": "index",
+    "imports": [
+      "_index.js"
+    ]
+  },
   "_internal.js": {
     "file": "chunks/internal.js",
     "name": "internal",
     "imports": [
-      "_equality.js",
       "_index.js",
       "_paths.js"
     ]
@@ -49,14 +53,23 @@
     "file": "chunks/paths.js",
     "name": "paths"
   },
+  "_stores.js": {
+    "file": "chunks/stores.js",
+    "name": "stores",
+    "imports": [
+      "_escaping.js",
+      "_index2.js"
+    ]
+  },
   "node_modules/@sveltejs/kit/src/runtime/components/svelte-5/error.svelte": {
     "file": "entries/fallbacks/error.svelte.js",
     "name": "entries/fallbacks/error.svelte",
     "src": "node_modules/@sveltejs/kit/src/runtime/components/svelte-5/error.svelte",
     "isEntry": true,
     "imports": [
-      "_client.js",
-      "_index.js"
+      "_escaping.js",
+      "_index.js",
+      "_client.js"
     ]
   },
   "node_modules/@sveltejs/kit/src/runtime/server/index.js": {
@@ -65,9 +78,11 @@
     "src": "node_modules/@sveltejs/kit/src/runtime/server/index.js",
     "isEntry": true,
     "imports": [
-      "_internal.js",
+      "_index.js",
       "_paths.js",
-      "_exports.js"
+      "_exports.js",
+      "_index2.js",
+      "_internal.js"
     ]
   },
   "src/routes/+layout.svelte": {
@@ -78,6 +93,7 @@
     "imports": [
       "_index.js",
       "_client.js",
+      "_stores.js",
       "_paths.js"
     ],
     "css": [
@@ -89,8 +105,12 @@
     "name": "entries/pages/_page.svelte",
     "src": "src/routes/+page.svelte",
     "isEntry": true,
+    "imports": [
+      "_index.js",
+      "_stores.js"
+    ],
     "css": [
-      "_app/immutable/assets/global.mC8z8AcH.css"
+      "_app/immutable/assets/global.Cs09nIWu.css"
     ]
   },
   "src/routes/contributions/+page.svelte": {
@@ -105,11 +125,12 @@
     "src": "src/routes/dataset/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_index.js"
+      "_index.js",
+      "_stores.js"
     ],
     "css": [
-      "_app/immutable/assets/_page.BMRlFMtH.css",
-      "_app/immutable/assets/global.mC8z8AcH.css"
+      "_app/immutable/assets/_page.Bx6qsVyR.css",
+      "_app/immutable/assets/global.Cs09nIWu.css"
     ]
   },
   "src/routes/methodology/+page.svelte": {
@@ -117,8 +138,13 @@
     "name": "entries/pages/methodology/_page.svelte",
     "src": "src/routes/methodology/+page.svelte",
     "isEntry": true,
+    "imports": [
+      "_index.js",
+      "_stores.js"
+    ],
     "css": [
-      "_app/immutable/assets/global.mC8z8AcH.css"
+      "_app/immutable/assets/_page.BC0k5ALk.css",
+      "_app/immutable/assets/global.Cs09nIWu.css"
     ]
   },
   "src/routes/problem/+page.svelte": {
@@ -126,8 +152,12 @@
     "name": "entries/pages/problem/_page.svelte",
     "src": "src/routes/problem/+page.svelte",
     "isEntry": true,
+    "imports": [
+      "_index.js",
+      "_stores.js"
+    ],
     "css": [
-      "_app/immutable/assets/global.mC8z8AcH.css"
+      "_app/immutable/assets/global.Cs09nIWu.css"
     ]
   },
   "src/routes/references/+page.svelte": {
@@ -135,8 +165,12 @@
     "name": "entries/pages/references/_page.svelte",
     "src": "src/routes/references/+page.svelte",
     "isEntry": true,
+    "imports": [
+      "_index.js",
+      "_stores.js"
+    ],
     "css": [
-      "_app/immutable/assets/global.mC8z8AcH.css"
+      "_app/immutable/assets/global.Cs09nIWu.css"
     ]
   },
   "src/routes/results/+page.svelte": {
@@ -144,8 +178,12 @@
     "name": "entries/pages/results/_page.svelte",
     "src": "src/routes/results/+page.svelte",
     "isEntry": true,
+    "imports": [
+      "_index.js",
+      "_stores.js"
+    ],
     "css": [
-      "_app/immutable/assets/global.mC8z8AcH.css"
+      "_app/immutable/assets/global.Cs09nIWu.css"
     ]
   }
 }

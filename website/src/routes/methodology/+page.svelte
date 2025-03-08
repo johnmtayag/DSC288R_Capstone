@@ -1,5 +1,11 @@
 <script>
     import '$lib/global.css';
+    import GradCamOverylay from '$lib/components/GradCAMOverylay.svelte';
+    import { asideVisible } from '$lib/stores.js';
+
+    function toggleAside() {
+      asideVisible.update(v => !v);
+    }
   </script>
 
     <section id="methodology">
@@ -18,6 +24,8 @@
         </ol>
     <p style="margin-top: 1.5rem;">This allows us to analyze the impact of preprocessing on model accuracy and uncertainty.
     </p>
+
+    <GradCamOverylay patientId="patientID" />
   </section>
 
   <section id="success-criteria">
@@ -27,8 +35,10 @@
     </p>
   </section>
   
-  <aside>
-    <div class="contents-header">On this page</div>
+  <aside class:collapsed={!$asideVisible}>
+    <div class="contents-header" on:click={toggleAside}>
+      <span class="header-text">On this page</span>
+    </div>
     <ul>
       <li><a href="#methodology">Methodology</a></li>
       <li><a href="#approach">Approach</a></li>

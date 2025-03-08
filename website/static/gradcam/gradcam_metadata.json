@@ -1,0 +1,164 @@
+{
+  "patients": {
+    "patientID": {
+      "patient_id": "patientID",
+      "models": {
+        "resnet50": {
+          "raw": {
+            "224": {
+              "original_xray": "/gradcam/patientID/resnet50/raw/224/original_xray.png",
+              "conditions": [
+                {
+                  "name": "Enlarged Cardiomediastinum",
+                  "gradcam_path": "/gradcam/patientID/resnet50/raw/224/gradcam_condition_0_Enlarged Cardiomediastinum.png"
+                },
+                {
+                  "name": "Cardiomegaly",
+                  "gradcam_path": "/gradcam/patientID/resnet50/raw/224/gradcam_condition_1_Cardiomegaly.png"
+                },
+                {
+                  "name": "Lung Opacity",
+                  "gradcam_path": "/gradcam/patientID/resnet50/raw/224/gradcam_condition_2_Lung Opacity.png"
+                },
+                {
+                  "name": "Lung Lesion",
+                  "gradcam_path": "/gradcam/patientID/resnet50/raw/224/gradcam_condition_3_Lung Lesion.png"
+                },
+                {
+                  "name": "Edema",
+                  "gradcam_path": "/gradcam/patientID/resnet50/raw/224/gradcam_condition_4_Edema.png"
+                },
+                {
+                  "name": "Consolidation",
+                  "gradcam_path": "/gradcam/patientID/resnet50/raw/224/gradcam_condition_5_Consolidation.png"
+                },
+                {
+                  "name": "Pneumonia",
+                  "gradcam_path": "/gradcam/patientID/resnet50/raw/224/gradcam_condition_6_Pneumonia.png"
+                },
+                {
+                  "name": "Atelectasis",
+                  "gradcam_path": "/gradcam/patientID/resnet50/raw/224/gradcam_condition_7_Atelectasis.png"
+                },
+                {
+                  "name": "Pneumothorax",
+                  "gradcam_path": "/gradcam/patientID/resnet50/raw/224/gradcam_condition_8_Pneumothorax.png"
+                },
+                {
+                  "name": "Pleural Effusion",
+                  "gradcam_path": "/gradcam/patientID/resnet50/raw/224/gradcam_condition_9_Pleural Effusion.png"
+                },
+                {
+                  "name": "Pleural Other",
+                  "gradcam_path": "/gradcam/patientID/resnet50/raw/224/gradcam_condition_10_Pleural Other.png"
+                },
+                {
+                  "name": "Fracture",
+                  "gradcam_path": "/gradcam/patientID/resnet50/raw/224/gradcam_condition_11_Fracture.png"
+                },
+                {
+                  "name": "Support Devices",
+                  "gradcam_path": "/gradcam/patientID/resnet50/raw/224/gradcam_condition_12_Support Devices.png"
+                },
+                {
+                  "name": "No Finding",
+                  "gradcam_path": "/gradcam/patientID/resnet50/raw/224/gradcam_condition_13_No Finding.png"
+                }
+              ]
+            },
+            "384": {
+              "original_xray": "",
+              "conditions": [
+                {
+                  "name": "Enlarged Cardiomediastinum",
+                  "gradcam_path": ""
+                }
+              ]
+            },
+            "512": {
+              "original_xray": "/gradcam/patientID/resnet50/raw/512/original_xray.png",
+              "conditions": [
+                {
+                  "name": "Enlarged Cardiomediastinum",
+                  "gradcam_path": "/gradcam/patientID/resnet50/raw/512/gradcam_condition_0_Enlarged Cardiomediastinum.png"
+                }
+              ]
+            }
+          },
+          "enhanced": {
+            "224": {
+              "original_xray": "/gradcam/patientID/resnet50/enhanced/224/original_xray.png",
+              "conditions": [
+                {
+                  "name": "Enlarged Cardiomediastinum",
+                  "gradcam_path": "/gradcam/patientID/resnet50/enhanced/224/gradcam_condition_0_Enlarged Cardiomediastinum.png"
+                }
+              ]
+            }
+          }
+        },
+        "densenet121": {
+          "raw": {
+            "224": {
+              "original_xray": "/gradcam/patientID/densenet121/raw/224/original_xray.png",
+              "conditions": [
+                {
+                  "name": "Enlarged Cardiomediastinum",
+                  "gradcam_path": "/gradcam/patientID/densenet121/raw/224/gradcam_condition_0_Enlarged Cardiomediastinum.png"
+                }
+              ]
+            }
+          },
+          "enhanced": {
+            "224": {
+              "original_xray": "/gradcam/patientID/densenet121/enhanced/224/original_xray.png",
+              "conditions": []
+            }
+          }
+        }
+      }
+    },
+
+    "patientB": {
+      "patient_id": "patientB",
+      "models": {
+        "resnet50": {
+          "raw": {
+            "224": {
+              "original_xray": "",
+              "conditions": []
+            },
+            "384": {
+              "original_xray": "",
+              "conditions": []
+            },
+            "512": {
+              "original_xray": "",
+              "conditions": []
+            }
+          },
+          "enhanced": {
+            "224": {
+              "original_xray": "",
+              "conditions": []
+            }
+          }
+        },
+        "densenet121": {
+          "raw": {
+            "224": {
+              "original_xray": "",
+              "conditions": []
+            }
+          },
+          "enhanced": {
+            "224": {
+              "original_xray": "",
+              "conditions": []
+            }
+          }
+        }
+      }
+    }
+  }
+}

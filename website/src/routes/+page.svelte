@@ -1,5 +1,10 @@
 <script>
     import '$lib/global.css';
+    import { asideVisible } from '$lib/stores.js';
+
+    function toggleAside() {
+      asideVisible.update(v => !v);
+    }
   </script>
   
   <section id="home">
@@ -25,11 +30,14 @@
     </ul>
   </section>
   
-  <aside>
-    <div class="contents-header">On this page</div>
+  <aside class:collapsed={!$asideVisible}>
+    <div class="contents-header" on:click={toggleAside}>
+      <span class="header-text">On this page</span>
+    </div>
     <ul>
       <li><a href="#home">Home</a></li>
       <li><a href="#introduction">Introduction</a></li>
       <li><a href="#key-goals">Key Goals</a></li>
     </ul>
   </aside>
+  

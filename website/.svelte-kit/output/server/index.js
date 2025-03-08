@@ -1,7 +1,9 @@
-import { p as public_env, s as safe_public_env, B as BROWSER, r as read_implementation, o as options, g as get_hooks, a as set_private_env, b as prerendering, c as set_public_env, d as set_safe_public_env, e as set_read_implementation } from "./chunks/internal.js";
+import { D as DEV } from "./chunks/index.js";
 import { a as assets, b as base, c as app_dir, o as override, r as reset } from "./chunks/paths.js";
 import * as devalue from "devalue";
-import { m as make_trackable, d as disable_search, a as decode_params, r as readable, w as writable, n as normalize_path, b as resolve, c as decode_pathname, v as validate_layout_server_exports, e as validate_layout_exports, f as validate_page_server_exports, g as validate_page_exports, h as validate_server_exports } from "./chunks/exports.js";
+import { m as make_trackable, d as disable_search, a as decode_params, n as normalize_path, r as resolve, b as decode_pathname, v as validate_layout_server_exports, c as validate_layout_exports, e as validate_page_server_exports, f as validate_page_exports, g as validate_server_exports } from "./chunks/exports.js";
+import { r as readable, w as writable } from "./chunks/index2.js";
+import { p as public_env, s as safe_public_env, r as read_implementation, o as options, g as get_hooks, a as set_private_env, b as prerendering, c as set_public_env, d as set_safe_public_env, e as set_read_implementation } from "./chunks/internal.js";
 import { parse, serialize } from "cookie";
 import * as set_cookie_parser from "set-cookie-parser";
 const SVELTE_KIT_ASSETS = "/_svelte_kit_assets";
@@ -2196,7 +2198,7 @@ async function render_page(event, page, options2, manifest, state, resolve_opts)
     state.prerender_default = should_prerender;
     const fetched = [];
     if (get_option(nodes, "ssr") === false && !(state.prerendering && should_prerender_data)) {
-      if (BROWSER && action_result && !event.request.headers.has("x-sveltekit-action")) ;
+      if (DEV && action_result && !event.request.headers.has("x-sveltekit-action")) ;
       return await render_response({
         branch: [],
         fetched,
@@ -2784,12 +2786,12 @@ async function respond(request, options2, manifest, state) {
         trailing_slash = "always";
       } else if (route.page) {
         const nodes = await load_page_nodes(route.page, manifest);
-        if (BROWSER) ;
+        if (DEV) ;
         trailing_slash = get_option(nodes, "trailingSlash");
       } else if (route.endpoint) {
         const node = await route.endpoint();
         trailing_slash = node.trailingSlash;
-        if (BROWSER) ;
+        if (DEV) ;
       }
       if (!is_data_request) {
         const normalized = normalize_path(url.pathname, trailing_slash ?? "never");

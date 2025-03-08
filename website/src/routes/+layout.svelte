@@ -1,5 +1,6 @@
 <script>
   import { afterNavigate } from '$app/navigation';
+  import { asideVisible } from '$lib/stores.js';
   import BackToTop from '$lib/components/BackToTop.svelte';
   import { onMount } from 'svelte';
   import { base } from '$app/paths';
@@ -130,7 +131,7 @@
 </script>
 
 <!-- Main Layout -->
-<div bind:this={topBar} class="top-bar">
+<div bind:this={topBar} class="top-bar" class:expanded={!$asideVisible}>
   <div class="top-bar-actions">
     <a href="https://github.com/johnmtayag/DSC288R_Capstone" target="_blank" class="icon-button" title="GitHub">
       <!-- GitHub SVG Icon -->
@@ -162,13 +163,13 @@
 </nav>
 
 <div class="content-wrapper">
-  <aside>
+  <aside class:collapsed={!$asideVisible}>
     <slot name="aside">
       <!-- Default aside content -->
     </slot>
   </aside>
 
-  <main>
+  <main class:expanded={!$asideVisible}>
     <slot />
   </main>
 </div>
