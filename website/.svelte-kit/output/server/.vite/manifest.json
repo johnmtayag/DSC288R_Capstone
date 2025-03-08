@@ -26,9 +26,9 @@
     "file": "chunks/exports.js",
     "name": "exports"
   },
-  "_global.Cs09nIWu.css": {
-    "file": "_app/immutable/assets/global.Cs09nIWu.css",
-    "src": "_global.Cs09nIWu.css"
+  "_global.Cicj1dGA.css": {
+    "file": "_app/immutable/assets/global.Cicj1dGA.css",
+    "src": "_global.Cicj1dGA.css"
   },
   "_index.js": {
     "file": "chunks/index.js",
@@ -110,7 +110,7 @@
       "_stores.js"
     ],
     "css": [
-      "_app/immutable/assets/global.Cs09nIWu.css"
+      "_app/immutable/assets/global.Cicj1dGA.css"
     ]
   },
   "src/routes/contributions/+page.svelte": {
@@ -130,7 +130,7 @@
     ],
     "css": [
       "_app/immutable/assets/_page.Bx6qsVyR.css",
-      "_app/immutable/assets/global.Cs09nIWu.css"
+      "_app/immutable/assets/global.Cicj1dGA.css"
     ]
   },
   "src/routes/methodology/+page.svelte": {
@@ -144,7 +144,7 @@
     ],
     "css": [
       "_app/immutable/assets/_page.BC0k5ALk.css",
-      "_app/immutable/assets/global.Cs09nIWu.css"
+      "_app/immutable/assets/global.Cicj1dGA.css"
     ]
   },
   "src/routes/problem/+page.svelte": {
@@ -157,7 +157,7 @@
       "_stores.js"
     ],
     "css": [
-      "_app/immutable/assets/global.Cs09nIWu.css"
+      "_app/immutable/assets/global.Cicj1dGA.css"
     ]
   },
   "src/routes/references/+page.svelte": {
@@ -170,7 +170,7 @@
       "_stores.js"
     ],
     "css": [
-      "_app/immutable/assets/global.Cs09nIWu.css"
+      "_app/immutable/assets/global.Cicj1dGA.css"
     ]
   },
   "src/routes/results/+page.svelte": {
@@ -183,7 +183,7 @@
       "_stores.js"
     ],
     "css": [
-      "_app/immutable/assets/global.Cs09nIWu.css"
+      "_app/immutable/assets/global.Cicj1dGA.css"
     ]
   }
 }

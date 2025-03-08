@@ -71,13 +71,13 @@
     align-items: center;
     justify-content: flex-end;
     padding: 0 1rem;
-    transition: box-shadow 0.3s, background-color 0.3s;
-    transition: right 0.3s;
+    transition: box-shadow 0.3s, background-color 0.3s, right 0.3s, left 0.3s;
+    z-index: 1000;
   }
   
   /* Add border and shadow when scrolling */
   .top-bar.scrolled {
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 4px -3px rgba(0, 0, 0, 0.1);
   }
   
   .top-bar-actions {
@@ -87,7 +87,6 @@
 
   .top-bar.expanded {
     right: 0;
-    z-index: 1000;
     padding-right: 0.5rem;
   }
   
@@ -148,12 +147,13 @@
     content: "\2630"; /* Three horizontal lines */
     font-size: 1.5rem;
     color: #3b82f6;
+    cursor: pointer;
   }
 
   aside {
     background: #ffffff;
     border-left: 1px solid #e5e7eb;
-    padding: 3rem 1rem;
+    padding: 3.5rem 1rem;
     position: fixed;
     right: 0;
     top: 0;
