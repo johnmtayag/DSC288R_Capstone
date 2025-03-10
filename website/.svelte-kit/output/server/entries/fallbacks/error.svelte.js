@@ -1,6 +1,7 @@
-import { s as stores, e as escape_html } from "../../chunks/client.js";
+import { e as escape_html } from "../../chunks/escaping.js";
 import "clsx";
-import { g as getContext, c as pop, p as push } from "../../chunks/index.js";
+import { _ as getContext, V as pop, S as push } from "../../chunks/index.js";
+import { s as stores } from "../../chunks/client.js";
 ({
   check: stores.updated.check
 });

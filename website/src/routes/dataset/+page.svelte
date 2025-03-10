@@ -4,10 +4,14 @@
     import PieChart from "$lib/components/PieChart.svelte";
     import StackedBarChart from "$lib/components/StackedBarChart.svelte";
     import { base } from '$app/paths';
+    import { asideVisible } from '$lib/stores';
 
     let data = null;
     let selectedDataset = "filtered"; // default to filtered dataset
 
+    function toggleAside() {
+        asideVisible.update(v => !v);
+    }
 
     onMount(async () => {
         try {
@@ -66,8 +70,8 @@
 
       {#if data}
           <div class="chart-row">
-              <PieChart title="Frontal vs Lateral" data={data.view_distribution.original} />
-              <PieChart title="AP vs PA Projection" data={data.projection_distribution.original} />
+              <PieChart title="Frontal vs Lateral" data={Object.entries(data.view_distribution.original).map(([label, value]) => ({ label, value }))} />
+              <PieChart title="AP vs PA Projection" data={Object.entries(data.projection_distribution.original).map(([label, value]) => ({ label, value }))} />
           </div>
 
         <div class="dataset-toggle">
@@ -111,8 +115,10 @@
     </p>
   </section>
   
-  <aside>
-    <div class="contents-header">On this page</div>
+  <aside class:collapsed={!$asideVisible}>
+    <div class="contents-header" on:click={toggleAside}>
+      <span class="header-text">On this page</span>
+    </div>
     <ul>
       <li><a href="#overview">Overview</a></li>
       <li><a href="#dataset-composition">Dataset Composition</a></li>

@@ -1,22 +1,7 @@
 import "clsx";
-import { w as writable } from "./exports.js";
-import { n as noop } from "./equality.js";
-const ATTR_REGEX = /[&"<]/g;
-const CONTENT_REGEX = /[&<]/g;
-function escape_html(value, is_attr) {
-  const str = String(value ?? "");
-  const pattern = is_attr ? ATTR_REGEX : CONTENT_REGEX;
-  pattern.lastIndex = 0;
-  let escaped = "";
-  let last = 0;
-  while (pattern.test(str)) {
-    const i = pattern.lastIndex - 1;
-    const ch = str[i];
-    escaped += str.substring(last, i) + (ch === "&" ? "&amp;" : ch === '"' ? "&quot;" : "&lt;");
-    last = i + 1;
-  }
-  return escaped + str.substring(last);
-}
+import "./exports.js";
+import { w as writable } from "./index2.js";
+import { $ as noop } from "./index.js";
 function get(key, parse = JSON.parse) {
   try {
     return parse(sessionStorage[key]);
@@ -54,6 +39,5 @@ const stores = {
   updated: /* @__PURE__ */ create_updated_store()
 };
 export {
-  escape_html as e,
   stores as s
 };
