@@ -1,0 +1,121 @@
+results_df_name,model_name,metric_category,condition,metric,value
+model,model,positive_vs_negative,Cardiomegaly,TP,1080.0
+model,model,positive_vs_negative,Cardiomegaly,FP,4140.0
+model,model,positive_vs_negative,Cardiomegaly,FN,3680.0
+model,model,positive_vs_negative,Cardiomegaly,TN,30471.0
+model,model,positive_vs_negative,Cardiomegaly,TPR,0.226890756302521
+model,model,positive_vs_negative,Cardiomegaly,FPR,0.11961515125249199
+model,model,positive_vs_negative,Cardiomegaly,FNR,0.773109243697479
+model,model,positive_vs_negative,Cardiomegaly,TNR,0.880384848747508
+model,model,positive_vs_negative,Cardiomegaly,Precision,0.20704845814977973
+model,model,positive_vs_negative,Cardiomegaly,Recall,0.22705314009661837
+model,model,positive_vs_negative,Cardiomegaly,BER,0.4463621974749855
+model,model,positive_vs_negative,Cardiomegaly,F1 Score,0.21658986175115208
+model,model,positive_vs_negative,Consolidation,TP,827.0
+model,model,positive_vs_negative,Consolidation,FP,8970.0
+model,model,positive_vs_negative,Consolidation,FN,1422.0
+model,model,positive_vs_negative,Consolidation,TN,28152.0
+model,model,positive_vs_negative,Consolidation,TPR,0.36771898621609606
+model,model,positive_vs_negative,Consolidation,FPR,0.241635687732342
+model,model,positive_vs_negative,Consolidation,FNR,0.632281013783904
+model,model,positive_vs_negative,Consolidation,TNR,0.758364312267658
+model,model,positive_vs_negative,Consolidation,Precision,0.08450704225352113
+model,model,positive_vs_negative,Consolidation,Recall,0.368
+model,model,positive_vs_negative,Consolidation,BER,0.436958350758123
+model,model,positive_vs_negative,Consolidation,F1 Score,0.13745019920318724
+model,model,positive_vs_negative,Edema,TP,2979.0
+model,model,positive_vs_negative,Edema,FP,5211.0
+model,model,positive_vs_negative,Edema,FN,7334.0
+model,model,positive_vs_negative,Edema,TN,23847.0
+model,model,positive_vs_negative,Edema,TPR,0.28885872200135754
+model,model,positive_vs_negative,Edema,FPR,0.1793309931860417
+model,model,positive_vs_negative,Edema,FNR,0.7111412779986425
+model,model,positive_vs_negative,Edema,TNR,0.8206690068139583
+model,model,positive_vs_negative,Edema,Precision,0.36381394213160784
+model,model,positive_vs_negative,Edema,Recall,0.288927671126624
+model,model,positive_vs_negative,Edema,BER,0.4452361355923421
+model,model,positive_vs_negative,Edema,F1 Score,0.3220751148338287
+model,model,positive_vs_negative,Atelectasis,TP,785.0
+model,model,positive_vs_negative,Atelectasis,FP,3127.0
+model,model,positive_vs_negative,Atelectasis,FN,6025.0
+model,model,positive_vs_negative,Atelectasis,TN,29434.0
+model,model,positive_vs_negative,Atelectasis,TPR,0.11527165932452275
+model,model,positive_vs_negative,Atelectasis,FPR,0.09603513405607936
+model,model,positive_vs_negative,Atelectasis,FNR,0.8847283406754772
+model,model,positive_vs_negative,Atelectasis,TNR,0.9039648659439207
+model,model,positive_vs_negative,Atelectasis,Precision,0.20086889854331716
+model,model,positive_vs_negative,Atelectasis,Recall,0.11540155630597562
+model,model,positive_vs_negative,Atelectasis,BER,0.4903817373657783
+model,model,positive_vs_negative,Atelectasis,F1 Score,0.14658709436777323
+model,model,positive_vs_negative,Pleural Effusion,TP,8689.0
+model,model,positive_vs_negative,Pleural Effusion,FP,7836.0
+model,model,positive_vs_negative,Pleural Effusion,FN,6077.0
+model,model,positive_vs_negative,Pleural Effusion,TN,16769.0
+model,model,positive_vs_negative,Pleural Effusion,TPR,0.5884464309901124
+model,model,positive_vs_negative,Pleural Effusion,FPR,0.31847185531396055
+model,model,positive_vs_negative,Pleural Effusion,FNR,0.4115535690098876
+model,model,positive_vs_negative,Pleural Effusion,TNR,0.6815281446860394
+model,model,positive_vs_negative,Pleural Effusion,Precision,0.525838073338981
+model,model,positive_vs_negative,Pleural Effusion,Recall,0.5884743008058508
+model,model,positive_vs_negative,Pleural Effusion,BER,0.3650127121619241
+model,model,positive_vs_negative,Pleural Effusion,F1 Score,0.5553957754130316
+model,model,certain_vs_uncertain,Cardiomegaly,TP,25814.0
+model,model,certain_vs_uncertain,Cardiomegaly,FP,448.0
+model,model,certain_vs_uncertain,Cardiomegaly,FN,12880.0
+model,model,certain_vs_uncertain,Cardiomegaly,TN,229.0
+model,model,certain_vs_uncertain,Cardiomegaly,TPR,0.6671318550679692
+model,model,certain_vs_uncertain,Cardiomegaly,FPR,0.6617429837518464
+model,model,certain_vs_uncertain,Cardiomegaly,FNR,0.3328681449320308
+model,model,certain_vs_uncertain,Cardiomegaly,TNR,0.33825701624815363
+model,model,certain_vs_uncertain,Cardiomegaly,Precision,0.9829417812131135
+model,model,certain_vs_uncertain,Cardiomegaly,Recall,0.6671404574234397
+model,model,certain_vs_uncertain,Cardiomegaly,BER,0.4973055643419386
+model,model,certain_vs_uncertain,Cardiomegaly,F1 Score,0.7948212691277441
+model,model,certain_vs_uncertain,Consolidation,TP,25859.0
+model,model,certain_vs_uncertain,Consolidation,FP,3903.0
+model,model,certain_vs_uncertain,Consolidation,FN,8137.0
+model,model,certain_vs_uncertain,Consolidation,TN,1472.0
+model,model,certain_vs_uncertain,Consolidation,TPR,0.7606483115660666
+model,model,certain_vs_uncertain,Consolidation,FPR,0.726139534883721
+model,model,certain_vs_uncertain,Consolidation,FNR,0.2393516884339334
+model,model,certain_vs_uncertain,Consolidation,TNR,0.2738604651162791
+model,model,certain_vs_uncertain,Consolidation,Precision,0.8688640258038505
+model,model,certain_vs_uncertain,Consolidation,Recall,0.7606553519428185
+model,model,certain_vs_uncertain,Consolidation,BER,0.4827456116588272
+model,model,certain_vs_uncertain,Consolidation,F1 Score,0.8111668757841908
+model,model,certain_vs_uncertain,Edema,TP,17933.0
+model,model,certain_vs_uncertain,Edema,FP,889.0
+model,model,certain_vs_uncertain,Edema,FN,18959.0
+model,model,certain_vs_uncertain,Edema,TN,1590.0
+model,model,certain_vs_uncertain,Edema,TPR,0.48609454624308795
+model,model,certain_vs_uncertain,Edema,FPR,0.35861234368697054
+model,model,certain_vs_uncertain,Edema,FNR,0.5139054537569121
+model,model,certain_vs_uncertain,Edema,TNR,0.6413876563130294
+model,model,certain_vs_uncertain,Edema,Precision,0.9527705466716251
+model,model,certain_vs_uncertain,Edema,Recall,0.4861084758626298
+model,model,certain_vs_uncertain,Edema,BER,0.43625889872194135
+model,model,certain_vs_uncertain,Edema,F1 Score,0.6437648072367004
+model,model,certain_vs_uncertain,Atelectasis,TP,22490.0
+model,model,certain_vs_uncertain,Atelectasis,FP,4547.0
+model,model,certain_vs_uncertain,Atelectasis,FN,9889.0
+model,model,certain_vs_uncertain,Atelectasis,TN,2445.0
+model,model,certain_vs_uncertain,Atelectasis,TPR,0.6945859970968837
+model,model,certain_vs_uncertain,Atelectasis,FPR,0.6503146453089245
+model,model,certain_vs_uncertain,Atelectasis,FNR,0.3054140029031162
+model,model,certain_vs_uncertain,Atelectasis,TNR,0.34968535469107553
+model,model,certain_vs_uncertain,Atelectasis,Precision,0.8318292773134107
+model,model,certain_vs_uncertain,Atelectasis,Recall,0.6945954292773316
+model,model,certain_vs_uncertain,Atelectasis,BER,0.4778643241060203
+model,model,certain_vs_uncertain,Atelectasis,F1 Score,0.7570433202059981
+model,model,certain_vs_uncertain,Pleural Effusion,TP,35483.0
+model,model,certain_vs_uncertain,Pleural Effusion,FP,1160.0
+model,model,certain_vs_uncertain,Pleural Effusion,FN,2641.0
+model,model,certain_vs_uncertain,Pleural Effusion,TN,87.0
+model,model,certain_vs_uncertain,Pleural Effusion,TPR,0.9307260518308677
+model,model,certain_vs_uncertain,Pleural Effusion,FPR,0.9302325581395349
+model,model,certain_vs_uncertain,Pleural Effusion,FNR,0.06927394816913231
+model,model,certain_vs_uncertain,Pleural Effusion,TNR,0.06976744186046512
+model,model,certain_vs_uncertain,Pleural Effusion,Precision,0.9683440672415675
+model,model,certain_vs_uncertain,Pleural Effusion,Recall,0.9307278688524591
+model,model,certain_vs_uncertain,Pleural Effusion,BER,0.4997532531543336
+model,model,certain_vs_uncertain,Pleural Effusion,F1 Score,0.9491634233438992
