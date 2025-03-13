@@ -1,0 +1,2 @@
+{class_cols: &id001 [Cardiomegaly, Consolidation, Edema, Atelectasis, Pleural Effusion],
+  conditions: *id001, n_class_values: 3, n_classes: 5}

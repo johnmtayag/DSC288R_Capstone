@@ -1,0 +1,32 @@
+wrapper_kwargs0:
+  dim: 224
+  enhanced: false
+  model_type: ResNet50
+wrapper_kwargs1:
+  dim: 224
+  enhanced: true
+  model_type: ResNet50
+wrapper_kwargs2:
+  dim: 384
+  enhanced: false
+  model_type: ResNet50
+wrapper_kwargs3:
+  dim: 384
+  enhanced: true
+  model_type: ResNet50
+wrapper_kwargs4:
+  dim: 224
+  enhanced: false
+  model_type: DenseNet121
+wrapper_kwargs5:
+  dim: 224
+  enhanced: true
+  model_type: DenseNet121
+wrapper_kwargs6:
+  dim: 384
+  enhanced: false
+  model_type: DenseNet121
+wrapper_kwargs7:
+  dim: 384
+  enhanced: true
+  model_type: DenseNet121
