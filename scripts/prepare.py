@@ -194,7 +194,7 @@ def resample(df, class_cols, n_samples):
     # classWeights2, valueWeights2 = get_and_print_new_weights(output_df, class_cols, n_samples)
 
     # return (output_df, classWeights2, valueWeights2)
-    return output_df
+    return df.iloc[batch,:].copy()
     
     
     

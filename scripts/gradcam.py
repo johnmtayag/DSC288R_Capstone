@@ -412,9 +412,9 @@ def gradcam_pca_analysis(model_type, dim, enhanced, n_pca_components, pca_sample
     # The similarity is then averaged across the set
     # Use dot product, L2, and cosine similarities
     gradcam_vars = dict(
-        avg_dot = np.zeros((pca_sample_size,pca_sample_size)),
-        avg_L2 = np.zeros((pca_sample_size,pca_sample_size)),
-        avg_corr = np.zeros((pca_sample_size,pca_sample_size)),
+        avg_dot = np.zeros((n_classes,n_classes)),
+        avg_L2 = np.zeros((n_classes,n_classes)),
+        avg_corr = np.zeros((n_classes,n_classes)),
         avg_explained_variance = 0,
         avg_explained_variance_ratios = np.zeros(n_pca_components)
     )
@@ -452,40 +452,20 @@ def gradcam_pca_analysis(model_type, dim, enhanced, n_pca_components, pca_sample
         input_tensor, _ = load_image(df, img_idx, image_path_column, dim, enhanced, device, **pipeline_kwargs)
         img_tensors[i,:,:,:] = input_tensor
 
-    ### For each condition, for each image, get the corresponding gradcam mask and unroll it with the hilbert index
-    # Store the results in img_hibert_mat
-    img_hilbert_mats = np.zeros((len(conditions), pca_sample_size, n_pca_components))
-    gradcam_vars_byCondition = {}
-    for cond_idx,condition in enumerate(conditions):
-        # Instantiate variables
-        condition_gradcam_vars = dict(
-            avg_dot = np.zeros((pca_sample_size,pca_sample_size)),
-            avg_L2 = np.zeros((pca_sample_size,pca_sample_size)),
-            avg_corr = np.zeros((pca_sample_size,pca_sample_size)),
-            avg_explained_variance = 0,
-            avg_explained_variance_ratios = np.zeros(n_pca_components)
-        )
-        gradcam_mat = np.zeros((pca_sample_size, hilbert_dim**2))
-        #
-        for counter,img_idx in enumerate(img_idxs, start=1):
-            target_label = int(df.loc[img_idx, condition])
-            predicted_label = int(df.loc[img_idx, f"{condition}_pred"])
-            input_tensor = img_tensors[i,:,:,:].unsqueeze(0)
-            #
-            gradcam_mask = get_gradcam_masks_forPCA(model, target_layer, input_tensor, predicted_label, cond_idx, device)
+    ## Loop through all df images and track aggregate stats based on pca transformations
+    for counter,img_idx in enumerate(img_idxs, start=1):
+        input_tensor = img_tensors[i,:,:,:].unsqueeze(0)
+        target_labels = [int(df.loc[img_idx, condition]) for condition in conditions]
+        predicted_labels = [int(df.loc[img_idx, f"{condition}_pred"]) for condition in conditions]
+        gradcam_masks = get_gradcam_masks(model, target_layer, input_tensor, predicted_labels, device)
+        
+        gradcam_mat = np.zeros((n_classes, hilbert_dim**2))
+        for cond_idx, gradcam_mask in enumerate(gradcam_masks):
             gradcam_mat[cond_idx, :] =  hilbert_ravel(gradcam_mask, hilbert_dim, hilbert_idxs)
-
-        # Get the PCA representation of gradcam_mat to reduce the dimensionality
-        pca = PCA(n_components=n_pca_components)
-        pca_gradcam = pca.fit_transform(gradcam_mat)
-    
-        # Accumulate variables in gradcam_vars
-        condition_gradcam_vars = add_to_gradcam_vars(condition_gradcam_vars, gradcam_mat, n_pca_components, counter, **kwargs)
+        
         gradcam_vars = add_to_gradcam_vars(gradcam_vars, gradcam_mat, n_pca_components, counter, **kwargs)
-        #
-        gradcam_vars_byCondition["condition"] = condition_gradcam_vars
 
-    return gradcam_vars, gradcam_vars_byCondition
+    return gradcam_vars
 
 def add_to_gradcam_vars(grad_vars, grad_mat, n_pca_components, counter, **kwargs):
     """
