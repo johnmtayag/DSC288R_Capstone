@@ -193,3 +193,7 @@ Thumbs.db
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+### CUSTOM SECTION
+
+# Main CheXpert data files
