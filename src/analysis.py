@@ -108,7 +108,7 @@ def get_uncertainty_metrics(df):
                 (actualU==0) & (actualP==1) & (predictU==1)
             )
             *
-            (1 / np.sum(actualU==1))
+            (1 / np.sum(actualU==0))
         ) 
         # The fraction of actual certain negative images predicted as uncertain
         frac_actualCN_predictU = float(
@@ -153,7 +153,7 @@ def get_uncertainty_metrics(df):
         #
         output_by_class[class_col] = {"TPU":TPU, "FPU":FPU, "FNU":FNU, "TNU":TNU,
                                      "FPU_AP":FPU_AP, "FPU_AN":FPU_AN, "TNU_AP":TNU_AP, "TNU_AN":TNU_AN,
-                                     "prec":prec, "recall":recall, "f1_score":f1_score}
+                                     "Precision":prec, "Recall":recall, "F1 Score":f1_score}
     return output_by_class
 
 def get_all_metrics(input_file_paths_dict, include_certain_vs_uncertain=False):
@@ -374,10 +374,3 @@ def plot_multiple_avg_metrics(df, metrics_cols, n_plots_x=None, n_plots_y=None, 
             ax.grid(axis="x")
     plt.tight_layout()
     return fig,axes
-
-def get_uncertain_metrics(dfs, output_cols, n_class_values=3, **kwargs):
-    "A wrapper for get_metrics where the data frame values are mapped to certain predictions vs uncertain predictions"
-    dfs2 = []
-    for df in dfs:
-        df2 = df.copy()
-        df2[class_cols + pred_cols]

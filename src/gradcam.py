@@ -477,8 +477,6 @@ def gradcam_pca_analysis(model_type, dim, enhanced, n_pca_components, pca_sample
     n_bits = 8
     hilbert_idxs = get_hilbert_index(hilbert_dim, n_dim, n_bits)
     
-    ### Get 
-    
     ### Get a sample of n_instances row indexes from df
     # image_idxs = np.random.choice(df.index, pca_sample_size, replacement=False)
     img_idxs = df.index[:pca_sample_size]

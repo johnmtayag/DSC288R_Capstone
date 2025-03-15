@@ -84,13 +84,16 @@ test_rad_filepath = "data/processed_data/test_rad_df.csv"
 # --- Use the GPU
 use_cuda = True
 # --- Set the number of workers for the data loader (Typically use the # of GPUs * 4)
+#
+# NOTE: If there are issues running this file, try setting n_workers = 0
+#
 n_workers = 4
 
 
 
 ################################################################################
 
-### Model
+### Model (Don't change lines below this)
 
 ################################################################################
 
