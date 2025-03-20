@@ -14,8 +14,8 @@ For this project, we utilized CXR images and labeled datasets from the CheXpert 
 
 *Note: We had difficulty accessing these links from Chrome - we recommend using the Edge browser instead.*
 
-CheXpert: [Link]([Stanford AIMI Shared Datasets](https://stanfordaimi.azurewebsites.net/datasets/8cbd9ed4-2eb9-4565-affc-111cf4f7ebe2))
-CheXlocalize: [Link]([Stanford AIMI Shared Datasets](https://stanfordaimi.azurewebsites.net/datasets/23c56a0d-15de-405b-87c8-99c30138950c))
+CheXpert: [Stanford AIMI Shared Datasets](https://stanfordaimi.azurewebsites.net/datasets/8cbd9ed4-2eb9-4565-affc-111cf4f7ebe2)
+CheXlocalize: [Stanford AIMI Shared Datasets](https://stanfordaimi.azurewebsites.net/datasets/23c56a0d-15de-405b-87c8-99c30138950c)
 
 ### Before running any code, please reference the Data Dictionary and follow the steps for procuring and organizing the source files as these are not contained within this repository.
 
